@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
-const port = 3000;
+const port = 4000;
 const users = require("./mockDB");
 
 app.use(express.json());
