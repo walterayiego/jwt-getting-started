@@ -7,8 +7,8 @@ const users = require("./mockDB");
 
 app.use(express.json());
 
-app.get("/posts", authenticateToken, (req, res) => {
-    // Return only the posts of the user that is logged in
+app.get("/user-logged-in", authenticateToken, (req, res) => {
+  // Return only the posts of the user that is logged in
   res.json(users.filter((post) => post.username === req.user.name));
 });
 
@@ -25,27 +25,11 @@ function authenticateToken(req, res, next) {
 
     // set user to req.user so that it can be accessed in the next middleware
     req.user = user;
+    console.log("Success")
     next();
   });
 }
 
-app.post("/login", (req, res) => {
-  const { username } = req.body;
-  const user = { name: username };
-
-  /* 
-
-  Authentication happens here using authentication service of your choice
-    ....
-  */
-
-  // Generate token
-  jwt.sign(user, process.env.ACCESS_TOKEN, function (err, token) {
-    console.log(token);
-    res.json({ token });
-  });
-});
-
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Main Server at ${port}`);
 });
