@@ -29,6 +29,15 @@ app.post("/getnewToken", (req, res) => {
   });
 });
 
+// Delete the refresh token -- the user has to login again to get the refresh token
+app.delete("/logout", (req, res) => {
+  const loggedUserRefreshToken = req.body.token;
+
+  refreshToken = refreshToken.filter(
+    (token) => token !== loggedUserRefreshToken
+  );
+});
+
 app.post("/login", (req, res) => {
   const { username } = req.body;
   const user = { name: username };
