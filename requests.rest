@@ -7,7 +7,7 @@ POST http://localhost:4000/getnewToken
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmFuZSIsImlhdCI6MTcxNDYzNjA4OH0.jN9lUjmaJA2nTOGcA2k14sQuwarQ3ImPcBxRtW_GOQ0"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmFuZSIsImlhdCI6MTcxNTAxMDQwN30.dG0XvZNwch9Aj8dRxhJDrXjtiVnUaM-AvUk3uEkecbc"
 }
 
 ###
@@ -21,11 +21,11 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/logout
+DELETE http://localhost:4000/logout
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmltIiwiaWF0IjoxNTY4NzU5OTIyfQ.RT6wszuCeFLwC_6ksmNMIELxiC5s-uRivfRxyZof5ag"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmFuZSIsImlhdCI6MTcxNTAxMDQwN30.dG0XvZNwch9Aj8dRxhJDrXjtiVnUaM-AvUk3uEkecbc"
 }
 
 

@@ -16,9 +16,11 @@ let refreshToken = [];
 
 app.post("/getnewToken", (req, res) => {
   const { token } = req.body;
-  if (!token) return res.sendStatus(401);
+  if (!token)
+    return res.sendStatus(401).json({ message: "No token in the body" });
 
-  if (!refreshToken.includes(token)) return res.sendStatus(403);
+  if (!refreshToken.includes(token))
+    return res.sendStatus(403).json({ message: "Invalid token" });
 
   jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) => {
     if (err) return res.sendStatus(403);
@@ -30,11 +32,17 @@ app.post("/getnewToken", (req, res) => {
 
 // Delete the refresh token -- the user has to login again to get the refresh token
 app.delete("/logout", (req, res) => {
+  // const { id } = req.params;
+  console.log(refreshToken, "Before logout");
+
+  console.log(req.body, "Logged out");
+  
   const loggedUserRefreshToken = req.body.token;
 
   refreshToken = refreshToken.filter(
     (token) => token !== loggedUserRefreshToken
   );
+  console.log(refreshToken, "Logged out");
 });
 
 app.post("/login", (req, res) => {
@@ -67,7 +75,6 @@ app.listen(port, () => {
 app.get("/users", (req, res) => {
   res.json(users);
 });
-
 
 //Testing the connection to the Auth Server
 
