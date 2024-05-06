@@ -33,16 +33,23 @@ app.post("/getnewToken", (req, res) => {
 // Delete the refresh token -- the user has to login again to get the refresh token
 app.delete("/logout", (req, res) => {
   // const { id } = req.params;
-  console.log(refreshToken, "Before logout");
+  console.log(refreshToken, "refresh token Before logout");
 
-  console.log(req.body, "Logged out");
-  
+  console.log(req.body, "req.body Logged out");
+
   const loggedUserRefreshToken = req.body.token;
+
+  if (!loggedUserRefreshToken || !refreshToken.includes(loggedUserRefreshToken))
+    return res.sendStatus(403).json({ message: "Invalid token" });
 
   refreshToken = refreshToken.filter(
     (token) => token !== loggedUserRefreshToken
   );
   console.log(refreshToken, "Logged out");
+
+  if (refreshToken.length === 0) {
+    return res.json({ loggedOut: true, refreshToken: refreshToken });
+  }
 });
 
 app.post("/login", (req, res) => {
@@ -81,7 +88,7 @@ app.get("/users", (req, res) => {
 axios
   .get("http://localhost:4000/users")
   .then((res) => {
-    console.log(res.data, "from Auth Server");
+    // console.log(res.data, "from Auth Server");
   })
   .catch((err) => {
     console.log(err);
