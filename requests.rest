@@ -1,9 +1,5 @@
 GET http://localhost:3000/user-logged-in
-Content-Type: application/json
-
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmFuZSIsImlhdCI6MTcxNDYzNjQ0MSwiZXhwIjoxNzE0NjM2NDkxfQ.jyA9bZQM6sSCR8BWuDP9iTyYIai3yZ7v-9eDnplobsc"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmFuZSIsImlhdCI6MTcxNTAwODYyMCwiZXhwIjoxNzE1MDEzNjIwfQ.KflSFmu5CL6Z_vIk0A8gXa26Kf10IifDcoPu9kyCkbg
 
 ###
 
@@ -31,3 +27,8 @@ Content-Type: application/json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmltIiwiaWF0IjoxNTY4NzU5OTIyfQ.RT6wszuCeFLwC_6ksmNMIELxiC5s-uRivfRxyZof5ag"
 }
+
+
+###
+
+GET http://localhost:4000/users

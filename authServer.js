@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const port = 4000;
 const users = require("./mockDB");
@@ -17,12 +18,10 @@ app.post("/getnewToken", (req, res) => {
   const { token } = req.body;
   if (!token) return res.sendStatus(401);
 
-  // console.log(refreshToken[0], "    ", token);
-  // if (!refreshToken.includes(token)) return res.sendStatus(403);
+  if (!refreshToken.includes(token)) return res.sendStatus(403);
 
   jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) => {
     if (err) return res.sendStatus(403);
-
     const accessToken = generateAccessToken({ name: user.name });
 
     res.status(200).json({ accessToken });
@@ -54,7 +53,7 @@ app.post("/login", (req, res) => {
 
 const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN, {
-    expiresIn: "50s",
+    expiresIn: "5000s",
   });
 };
 const generateRefreshToken = (user) => {
@@ -64,3 +63,19 @@ const generateRefreshToken = (user) => {
 app.listen(port, () => {
   console.log(`Auth Server ${port}`);
 });
+
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+
+//Testing the connection to the Auth Server
+
+axios
+  .get("http://localhost:4000/users")
+  .then((res) => {
+    console.log(res.data, "from Auth Server");
+  })
+  .catch((err) => {
+    console.log(err);
+  });

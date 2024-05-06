@@ -9,14 +9,15 @@ app.use(express.json());
 
 app.get("/user-logged-in", authenticateToken, (req, res) => {
   // Return only the posts of the user that is logged in
-  res.json(users.filter((post) => post.username === req.user.name));
+  const user = users.filter((post) => post.username === req.user.name)
+  res.json(user);
 });
 
 function authenticateToken(req, res, next) {
-  const token = req.body.token;
+  // const token = req.body.token;
 
-  //   const authHeader = req.headers["authorization"];
-  //   const token = authHeader && authHeader.split(" ")[1];
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (token == null) return res.sendStatus(401);
 
@@ -25,7 +26,7 @@ function authenticateToken(req, res, next) {
 
     // set user to req.user so that it can be accessed in the next middleware
     req.user = user;
-    console.log("Success")
+    console.log("Success");
     next();
   });
 }
