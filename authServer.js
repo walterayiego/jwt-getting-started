@@ -7,6 +7,13 @@ const port = 4000;
 const users = require("./mockDB");
 
 app.use(express.json());
+// Enable CORS middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specified HTTP methods
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specified headers
+  next();
+});
 
 /* Generate new accessToken for the user without making the user have to login again. 
 It just makes sures the intergrity of the app, or 
@@ -40,15 +47,15 @@ app.delete("/logout", (req, res) => {
   const loggedUserRefreshToken = req.body.token;
 
   if (!loggedUserRefreshToken || !refreshToken.includes(loggedUserRefreshToken))
-    return res.sendStatus(403).json({ message: "Invalid token" });
+    return res.status(403).json({ message: "Invalid token" });
 
   refreshToken = refreshToken.filter(
     (token) => token !== loggedUserRefreshToken
   );
   console.log(refreshToken, "Logged out");
 
-  if (refreshToken.length === 0) {
-    return res.json({ loggedOut: true, refreshToken: refreshToken });
+  if (refreshToken.length == 0) {
+    return res.status(200).json({ loggedOut: true, refreshToken: refreshToken });
   }
 });
 
