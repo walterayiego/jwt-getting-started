@@ -9,9 +9,9 @@ const users = require("./mockDB");
 app.use(express.json());
 // Enable CORS middleware
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specified HTTP methods
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specified headers
+  res.header("Access-Control-Allow-Origin", "*"); // Allow requests from any origin
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // Allow specified HTTP methods
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allow specified headers
   next();
 });
 
@@ -55,18 +55,22 @@ app.delete("/logout", (req, res) => {
   console.log(refreshToken, "Logged out");
 
   if (refreshToken.length == 0) {
-    return res.status(200).json({ loggedOut: true, refreshToken: refreshToken });
+    return res
+      .status(200)
+      .json({ loggedOut: true, refreshToken: refreshToken });
   }
 });
 
 app.post("/login", (req, res) => {
   const { username } = req.body;
-  const user = { name: username };
+  if (!username)
+    return res.sendStatus(403).json({ message: "UserName not entered" });
   /* 
   Authentication happens here using authentication service of your choice
   */
-  // Generate token
-  const accessToken = generateAccessToken(user);
+ // Generate token
+ const user = { name: username };
+ const accessToken = generateAccessToken(user);
   const getRefreshToken = generateRefreshToken(user);
   refreshToken.push(getRefreshToken);
   res.json({ accessToken: accessToken, refreshToken: getRefreshToken });
